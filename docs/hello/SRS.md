@@ -2,7 +2,7 @@
 
 Module: `hello`
 Last updated: 2026-05-27
-Design: [View the approved design](http://localhost:8080/design/b478a015-f722-4b82-82c2-f37d1820af57)
+Design: [View the approved design](design/index.html)
 Design system: `design/design-system.md`
 
 > One file per module, at `docs/{module}/SRS.md`. It covers only the functions
@@ -91,8 +91,8 @@ blank screen.
 Behaviour:
 
 1. When the backend reports that no message row exists, the frontend renders an
-   empty state: a fixed placeholder text such as "No message" in the same
-   centered position and styling as the loaded message.
+   empty state: the fixed placeholder text "No message" in the same centered
+   position and styling as the loaded message.
 
 **Requirement HELLO-005 — Error state**
 
@@ -104,7 +104,8 @@ Behaviour:
 
 1. When the backend is unreachable, returns an error, or the database read
    fails, the frontend renders an error state in place of the message.
-2. The error state shows a short message and a retry control.
+2. The error state shows the message "Could not load the message" and a retry
+   control labelled "Retry".
 3. Activating the retry control re-runs the fetch from step 1 of HELLO-001.
 
 **Acceptance criteria** — each maps one-to-one onto a test case in
@@ -116,10 +117,10 @@ Behaviour:
 | AC-2 | The database holds a message "Hello Word" | The Guest loads the site root | The displayed text is rendered in dark text on a white background |
 | AC-3 | The fetch is in progress | The Guest loads the site root | A loading indication is visible in place of the message, and disappears once the response arrives |
 | AC-4 | The database holds the message "Bonjour" | The Guest loads the site root | The page shows "Bonjour" — proving the text comes from the database, not a hardcoded string |
-| AC-5 | The database holds no message row | The Guest loads the site root | The page shows the empty-state placeholder text instead of a blank screen |
-| AC-6 | The backend is unreachable | The Guest loads the site root | The page shows the error state with a retry control |
-| AC-7 | A previous load failed and the error state is showing | The Guest activates the retry control | The page re-fetches and shows the loaded message once the backend recovers |
-| AC-8 | The message is displayed | The Guest observes the page for a moment | No animation, transition, or motion is applied to the message |
+| AC-5 | The database holds no message row | The Guest loads the site root | The page shows the empty-state placeholder text "No message" instead of a blank screen |
+| AC-6 | The backend is unreachable | The Guest loads the site root | The page shows the error message "Could not load the message" with a retry control labelled "Retry" |
+| AC-7 | A previous load failed and the error state is showing | The Guest activates the retry control "Retry" | The page re-fetches and shows the loaded message once the backend recovers |
+| AC-8 | The message is displayed | The Guest observes the message | No animation, transition, or motion is applied to the message |
 
 **Failure, boundary and permission behaviour**
 
@@ -159,7 +160,7 @@ recorded in the approved design spec.
 
 | Area | Requirement |
 |---|---|
-| Performance | The page renders the message within 2 seconds on a typical connection once the backend responds |
+| Performance | The page renders the message within 2 seconds once the backend responds |
 | Accessibility | The message text is real text (selectable, exposed to screen readers), not an image |
 | Responsive | The centered message wraps without horizontal page scroll at 320px width and up |
 | Localisation | Copy is in English; the message itself renders verbatim as stored, whatever language it is stored in |
@@ -176,13 +177,14 @@ recorded in the approved design spec.
   until a row exists. The stakeholder's requested text is "Hello Word" (not
   "Hello World") and is quoted verbatim.
 
-| Open question | Proposed default | Who decides |
-|---|---|---|
-| Exact empty-state copy | "No message" | Stakeholder |
-| Exact error-state copy | "Could not load the message" with a "Retry" control | Stakeholder |
+The following copy is pinned and used verbatim throughout the requirements and
+acceptance criteria:
 
-Both defaults are used as written below in the absence of a stakeholder
-decision; the exact wording is cosmetic and does not block the build.
+| Copy | Pinned text |
+|---|---|
+| Empty state | "No message" |
+| Error state | "Could not load the message" |
+| Retry control | "Retry" |
 
 ## 8. Traceability
 
